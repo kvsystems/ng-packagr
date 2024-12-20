@@ -11,5 +11,5 @@ This is a fork of [ng-packagr/ng-packagr](https://github.com/ng-packagr/ng-packa
 ## Installation
 
 ```bash
-npm install -D ng-packagr
+npm install -D @kv-systems/ng-packagr
 ```
