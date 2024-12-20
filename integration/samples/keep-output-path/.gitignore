@@ -1,0 +1,5 @@
+dest/**/*.mjs
+dest/**/*.d.ts
+dest/**/*.json
+dest/**/*.map
+dest/**/*.js

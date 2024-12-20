@@ -1,0 +1,132 @@
+{
+  "name": "@kv-systems/ng-packagr",
+  "version": "19.1.0-next.1",
+  "description": "Compile and package Angular libraries in Angular Package Format (APF)",
+  "keywords": [
+    "apf",
+    "angular-package-format",
+    "angular",
+    "angular-library",
+    "angular-components",
+    "component-library",
+    "typescript",
+    "css",
+    "scss"
+  ],
+  "engines": {
+    "node": "^18.19.1 || >=20.11.1"
+  },
+  "author": "David Herges <david@spektrakel.de>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kvsystems/ng-packagr.git"
+  },
+  "homepage": "https://github.com/kvsystems/ng-packagr",
+  "resolutions": {
+    "strip-ansi": "6.0.1",
+    "string-width": "4.2.2",
+    "wrap-ansi": "7.0.0"
+  },
+  "bin": {
+    "ng-packagr": "./cli/main.js"
+  },
+  "main": "./public_api.js",
+  "typings": "./public_api.d.ts",
+  "dependencies": {
+    "@rollup/plugin-json": "^6.1.0",
+    "@rollup/wasm-node": "^4.24.0",
+    "ajv": "^8.17.1",
+    "ansi-colors": "^4.1.3",
+    "browserslist": "^4.22.1",
+    "chokidar": "^4.0.1",
+    "commander": "^12.1.0",
+    "convert-source-map": "^2.0.0",
+    "dependency-graph": "^1.0.0",
+    "esbuild": "^0.24.0",
+    "fast-glob": "^3.3.2",
+    "find-cache-dir": "^3.3.2",
+    "injection-js": "^2.4.0",
+    "jsonc-parser": "^3.3.1",
+    "less": "^4.2.0",
+    "ora": "^5.1.0",
+    "piscina": "^4.7.0",
+    "postcss": "^8.4.47",
+    "rxjs": "^7.8.1",
+    "sass": "^1.79.5"
+  },
+  "optionalDependencies": {
+    "rollup": "^4.24.0"
+  },
+  "peerDependencies": {
+    "@angular/compiler-cli": "^19.0.0 || ^19.1.0.next-0",
+    "tailwindcss": "^2.0.0 || ^3.0.0",
+    "tslib": "^2.3.0",
+    "typescript": ">=5.5 <5.8"
+  },
+  "peerDependenciesMeta": {
+    "tailwindcss": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@angular/cdk": "~19.0.4",
+    "@angular/common": "~19.0.5",
+    "@angular/compiler": "~19.0.5",
+    "@angular/compiler-cli": "~19.0.5",
+    "@angular/core": "~19.0.5",
+    "@angular/material": "~19.0.4",
+    "@angular/platform-browser": "~19.0.5",
+    "@angular/router": "~19.0.5",
+    "@commitlint/cli": "^19.0.0",
+    "@commitlint/config-angular": "^19.0.0",
+    "@types/chai": "^4.0.0",
+    "@types/chokidar": "^2.0.0",
+    "@types/find-cache-dir": "^3.2.0",
+    "@types/fs-extra": "^11.0.0",
+    "@types/jasmine": "^5.0.0",
+    "@types/less": "^3.0.2",
+    "@types/node": "^20.0.0",
+    "@types/read-pkg-up": "^6.0.0",
+    "@typescript-eslint/eslint-plugin": "7.18.0",
+    "@typescript-eslint/parser": "7.18.0",
+    "chai": "^4.3.10",
+    "cross-env": "^7.0.0",
+    "eslint": "8.57.0",
+    "eslint-config-prettier": "9.1.0",
+    "eslint-plugin-header": "3.1.1",
+    "eslint-plugin-import": "2.31.0",
+    "fs-extra": "^11.0.0",
+    "husky": "^9.0.0",
+    "jasmine": "^3.9.0",
+    "jasmine-ts": "^0.4.0",
+    "json-schema-to-typescript": "^15.0.0",
+    "prettier": "~3.4.0",
+    "rimraf": "^5.0.0",
+    "standard-version": "^9.0.0",
+    "tailwindcss": "^3.2.0",
+    "ts-node": "^10.2.1",
+    "tslib": "^2.0.0",
+    "typescript": "~5.6.3",
+    "zone.js": "^0.15.0"
+  },
+  "private": true,
+  "scripts": {
+    "prepare": "husky",
+    "prebuild": "rimraf dist && yarn schema",
+    "build": "tsc -p src/tsconfig.packagr.json",
+    "postbuild": "node ./scripts/postbuild.js",
+    "schema": "json2ts --input src/ng-package.schema.json --output src/ng-package.schema.ts && json2ts --input src/ng-entrypoint.schema.json --output src/ng-entrypoint.schema.ts",
+    "release": "standard-version --releaseCommitMessageFormat 'release: cut {{currentTag}}' --no-verify --tag-prefix=\"\"",
+    "publish:ci": "yarn build",
+    "lint": "eslint --cache --max-warnings=0 \"**/*.ts\"",
+    "integration:samples": "ts-node integration/samples.ts",
+    "integration:samples:dev": "ts-node --project src/tsconfig.packagr.json ./integration/samples.dev.ts",
+    "integration:specs": "cross-env TS_NODE_PROJECT=integration/tsconfig.specs.json jasmine-ts \"integration/samples/*/specs/**/*.ts\"",
+    "integration:consumers": "integration/consumers.sh",
+    "integration:consumers:ngc": "ngc -p integration/consumers/tsc/tsconfig.json",
+    "integration:watch:specs": "cross-env TS_NODE_PROJECT=integration/tsconfig.specs.json jasmine-ts --random=false \"integration/watch/*.spec.ts\"",
+    "test:specs": "cross-env TS_NODE_PROJECT=src/tsconfig.specs.json jasmine-ts \"src/**/*.spec.ts\"",
+    "test": "yarn build && yarn test:specs && yarn integration:samples && yarn integration:specs && yarn integration:watch:specs && yarn integration:consumers"
+  }
+}

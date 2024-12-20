@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../src/package.schema.json",
+  "description": "A third entry point",
+  "private": true,
+  "repository": "https://github.com/ng-packagr/ng-packagr.git"
+}

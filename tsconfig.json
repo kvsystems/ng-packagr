@@ -1,0 +1,23 @@
+{
+  "buildOnSave": false,
+  "compileOnSave": false,
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es2019",
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "pretty": true,
+    "noEmitOnError": true,
+    "noImplicitAny": false,
+    "sourceMap": true,
+    "inlineSourceMap": false,
+    "allowSyntheticDefaultImports": true,
+    "inlineSources": true,
+    "esModuleInterop": true,
+    "lib": ["es2022"],
+    "types": ["chai", "jasmine", "node"]
+  },
+  "exclude": ["dist", "integration"]
+}

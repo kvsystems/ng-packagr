@@ -1,0 +1,6 @@
+
+@use './_vars' as v;
+
+a {
+  color: v.$primary;
+}

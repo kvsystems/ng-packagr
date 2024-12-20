@@ -1,0 +1,7 @@
+@use '@angular/material' as mat;
+@include mat.core();
+
+.baz {
+  color: red;
+  content: '\2014 \00A0';
+}

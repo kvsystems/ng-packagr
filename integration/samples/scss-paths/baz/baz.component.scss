@@ -1,0 +1,19 @@
+@use '@angular/material' as mat;
+@import 'baz.theme';
+@import 'baz.theme2';
+@import 'theme';
+
+@include mat.core();
+
+.foo {
+  @include local-test-mixin();
+}
+
+.foo2 {
+  @include local-test-mixin2();
+}
+
+.baz {
+  background-color: $background-color-bright;
+  display: flex;
+}
